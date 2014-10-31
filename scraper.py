@@ -84,3 +84,46 @@ def getTCGPlayerPrices(cardName, cardSet):
     highPrice = rawHTML[startHighIndex:endHighIndex]
 
     return [lowPrice, midPrice, highPrice]
+
+def getTCGPlayerPrices(cardSet):
+        #   Open the TCGPlayer URL
+       # http://magic.tcgplayer.com/db/search_result.asp?Set_Name=Khans%20of%20Tarkir
+    tcgPlayerURL = "http://magic.tcgplayer.com/db/search_result.asp?Set_Name=" + urllib.quote(cardSet)
+    htmlFile = urllib.urlopen(tcgPlayerURL)
+    rawHTML = htmlFile.read()
+    setArray = []
+
+while tempIndex != "-1":
+
+    tempIndex = rawHTML.find('magic_single_card.asp', index)
+    startNameIndex = rawHTML.find('?cn=', tempIndex)
+    endNameIndex = rawHTML.find('&sn', startNameIndex)
+    CardName = rawHTML[startNameIndex:endNameIndex]
+
+    #   Scrape for the low price
+    tempIndex = rawHTML.find('bgcolor=#D9FCD1 class=default_8>', index)
+    if(tempIndex == "-1")
+        break
+    startLowIndex = rawHTML.find("\">$", tempIndex)
+    endLowIndex = rawHTML.find("<", startLowIndex)
+    index = endLowIndex
+    lowPrice = rawHTML[startLowIndex:endLowIndex]
+
+    #   Scrape for the mid price
+    tempIndex = rawHTML.find('bgcolor=#D1DFFC class=default_8>', index)
+    startMidIndex = rawHTML.find("\"$", tempIndex)
+    endMidIndex = rawHTML.find("<", startMidIndex)
+    index = endMidIndex
+    midPrice = rawHTML[startMidIndex:endMidIndex]
+
+    #   Scrape for the high price
+    tempIndex = rawHTML.find('bgcolor=#FCD1D1 class=default_8>', index)
+    startHighIndex = rawHTML.find("\"$", tempIndex)
+    endHighIndex = rawHTML.find("<", startHighIndex)
+    index = endHighIndex
+    highPrice = rawHTML[startHighIndex:endHighIndex]
+
+    dict = {'name': CardName, 'low': lowPrice, 'med': midPrice, 'high': highPrice}
+    setArray.append(dict)
+
+return setArray
