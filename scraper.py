@@ -85,45 +85,44 @@ def getTCGPlayerPrices(cardName, cardSet):
 
     return [lowPrice, midPrice, highPrice]
 
-def getTCGPlayerPrices(cardSet):
-        #   Open the TCGPlayer URL
-       # http://magic.tcgplayer.com/db/search_result.asp?Set_Name=Khans%20of%20Tarkir
-    tcgPlayerURL = "http://magic.tcgplayer.com/db/search_result.asp?Set_Name=" + urllib.quote(cardSet)
+def getTCGPlayerSetPrices(cardSet):
+    #   Open the TCGPlayer URL
+    tcgPlayerURL = "http://magic.tcgplayer.com/db/price_guide.asp?setname="+cardSet# + urllib.quote(cardSet)    
     htmlFile = urllib.urlopen(tcgPlayerURL)
     rawHTML = htmlFile.read()
     setArray = []
+    tempIndex = 0
+    index = 0
+    while tempIndex != -1:
+        tempIndex = rawHTML.find("<td width=200", index)
+        startNameIndex = rawHTML.find("7>", tempIndex)
+        endNameIndex = rawHTML.find("</font>", startNameIndex)
+        CardName = rawHTML[startNameIndex:endNameIndex]
+        index = endNameIndex
 
-while tempIndex != "-1":
+        #   Scrape for the low price
+        tempIndex = rawHTML.find("<td width=55", index)
+        startLowIndex = rawHTML.find("$", tempIndex)
+        endLowIndex = rawHTML.find("</font>", startLowIndex)
+        index = endLowIndex
+        lowPrice = rawHTML[startLowIndex:endLowIndex]
 
-    tempIndex = rawHTML.find('magic_single_card.asp', index)
-    startNameIndex = rawHTML.find('?cn=', tempIndex)
-    endNameIndex = rawHTML.find('&sn', startNameIndex)
-    CardName = rawHTML[startNameIndex:endNameIndex]
+        #   Scrape for the mid price
+        tempIndex = rawHTML.find("<td width=55", endLowIndex)
+        startMidIndex = rawHTML.find("$", tempIndex)
+        endMidIndex = rawHTML.find("</font>", startMidIndex)
+        index = endMidIndex
+        midPrice = rawHTML[startMidIndex:endMidIndex]
 
-    #   Scrape for the low price
-    tempIndex = rawHTML.find('bgcolor=#D9FCD1 class=default_8>', index)
-    if(tempIndex == "-1")
-        break
-    startLowIndex = rawHTML.find("\">$", tempIndex)
-    endLowIndex = rawHTML.find("<", startLowIndex)
-    index = endLowIndex
-    lowPrice = rawHTML[startLowIndex:endLowIndex]
+        #   Scrape for the high price
+        tempIndex = rawHTML.find("<td width=55", endMidIndex)
+        startHighIndex = rawHTML.find("$", tempIndex)
+        endHighIndex = rawHTML.find("</font>", startHighIndex)
+        index = endHighIndex
+        highPrice = rawHTML[startHighIndex:endHighIndex]
 
-    #   Scrape for the mid price
-    tempIndex = rawHTML.find('bgcolor=#D1DFFC class=default_8>', index)
-    startMidIndex = rawHTML.find("\"$", tempIndex)
-    endMidIndex = rawHTML.find("<", startMidIndex)
-    index = endMidIndex
-    midPrice = rawHTML[startMidIndex:endMidIndex]
-
-    #   Scrape for the high price
-    tempIndex = rawHTML.find('bgcolor=#FCD1D1 class=default_8>', index)
-    startHighIndex = rawHTML.find("\"$", tempIndex)
-    endHighIndex = rawHTML.find("<", startHighIndex)
-    index = endHighIndex
-    highPrice = rawHTML[startHighIndex:endHighIndex]
-
-    dict = {'name': CardName, 'low': lowPrice, 'med': midPrice, 'high': highPrice}
-    setArray.append(dict)
-
-return setArray
+        dict = {"name": CardName[8:len(CardName)], "low": lowPrice[0:len(lowPrice)-6], "med": midPrice[0:len(midPrice)-6], "high": highPrice[0:len(highPrice)-6]}
+        setArray.append(dict)
+        print setArray
+    return setArray
+    # return "HI"

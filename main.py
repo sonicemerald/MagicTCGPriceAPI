@@ -82,6 +82,18 @@ class TCGPriceCheckHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(retVal))
 
+class TCGSetPriceHandler(webapp2.RequestHandler):
+    def get(self):
+        cardSet = self.request.get('cardset')
+        retVal = None
+        retVal = memcache.get('TCG ' + cardSet)
+        if retVal is None:
+            retVal = getTCGPlayerSetPrices(cardSet)
+            memcache.add('TCG ' + cardSet, retVal, 300)
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(retVal))
+
+
 class EbayPriceCheckHandler(webapp2.RequestHandler):
     def get(self):
         cardName = self.request.get('cardname')
@@ -105,6 +117,6 @@ class MainHandler(webapp2.RequestHandler):
         self.response.out.write("Hello world")
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler), ('/api/tcgplayer/price.json', TCGPriceCheckHandler), ('/api/ebay/price.json', EbayPriceCheckHandler), 
+    ('/', MainHandler), ('/api/tcgplayer/price.json', TCGPriceCheckHandler), ('/api/tcgplayer/setPrices.json', TCGSetPriceHandler), ('/api/ebay/price.json', EbayPriceCheckHandler), 
     ('/api/cfb/price.json', CFBPriceCheckHandler), ('/api/images/imageurl.json', GetImageURLHandler)
 ], debug=True)
