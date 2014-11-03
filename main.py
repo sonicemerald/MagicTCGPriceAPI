@@ -85,11 +85,11 @@ class TCGPriceCheckHandler(webapp2.RequestHandler):
 class TCGSetPriceHandler(webapp2.RequestHandler):
     def get(self):
         cardSet = self.request.get('cardset')
-        # retVal = None
-        # retVal = memcache.get('TCG ' + cardSet)
-        # if retVal is None:
-        retVal = getTCGPlayerSetPrices(cardSet)
-        memcache.add('TCG ' + cardSet, retVal, 300)
+        retVal = None
+        retVal = memcache.get('TCG ' + cardSet)
+        if retVal is None:
+            retVal = getTCGPlayerSetPrices(cardSet)
+            memcache.add('TCG ' + cardSet, retVal, 300)
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(json.dumps(retVal))
 
