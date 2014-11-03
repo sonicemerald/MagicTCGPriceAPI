@@ -87,7 +87,7 @@ def getTCGPlayerPrices(cardName, cardSet):
 
 def getTCGPlayerSetPrices(cardSet):
     #   Open the TCGPlayer URL
-    tcgPlayerURL = "http://magic.tcgplayer.com/db/price_guide.asp?setname="+cardSet# + urllib.quote(cardSet)    
+    tcgPlayerURL = "http://magic.tcgplayer.com/db/price_guide.asp?setname="+urllib.quote(cardSet)    
     htmlFile = urllib.urlopen(tcgPlayerURL)
     rawHTML = htmlFile.read()
     setArray = []
