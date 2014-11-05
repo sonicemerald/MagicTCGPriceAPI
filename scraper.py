@@ -101,26 +101,26 @@ def getTCGPlayerSetPrices(cardSet):
         CardName = rawHTML[startNameIndex:endNameIndex]
         index = endNameIndex
 
-        #   Scrape for the low price
+        #   Scrape for the high price
         tempIndex = rawHTML.find("<td width=55", index)
-        startLowIndex = rawHTML.find("$", tempIndex)
-        endLowIndex = rawHTML.find("</font>", startLowIndex)
-        index = endLowIndex
-        lowPrice = rawHTML[startLowIndex:endLowIndex]
+        startHighIndex = rawHTML.find("$", tempIndex)
+        endHighIndex = rawHTML.find("</font>", startHighIndex)
+        index = endHighIndex
+        highPrice = rawHTML[startHighIndex:endHighIndex]
 
         #   Scrape for the mid price
-        tempIndex = rawHTML.find("<td width=55", endLowIndex)
+        tempIndex = rawHTML.find("<td width=55", endHighIndex)
         startMidIndex = rawHTML.find("$", tempIndex)
         endMidIndex = rawHTML.find("</font>", startMidIndex)
         index = endMidIndex
         midPrice = rawHTML[startMidIndex:endMidIndex]
 
-        #   Scrape for the high price
+        #   Scrape for the low price
         tempIndex = rawHTML.find("<td width=55", endMidIndex)
-        startHighIndex = rawHTML.find("$", tempIndex)
-        endHighIndex = rawHTML.find("</font>", startHighIndex)
-        index = endHighIndex
-        highPrice = rawHTML[startHighIndex:endHighIndex]
+        startLowIndex = rawHTML.find("$", tempIndex)
+        endLowIndex = rawHTML.find("</font>", startLowIndex)
+        index = endLowIndex
+        lowPrice = rawHTML[startLowIndex:endLowIndex]
 
         dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
         #dict = {"name": CardName[8:len(CardName)], "low": lowPrice[0:len(lowPrice)-6], "med": midPrice[0:len(midPrice)-6], "high": highPrice[0:len(highPrice)-6]}
