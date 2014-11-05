@@ -4,7 +4,7 @@
 
 import urllib
 import logging
-from Collections import OrderedDict
+from collections import OrderedDict
 
 #
 #   Retrieves a URL to the card's image as represented by http://magiccards.info
