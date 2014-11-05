@@ -126,6 +126,5 @@ def getTCGPlayerSetPrices(cardSet):
         #dict = {"name": CardName[8:len(CardName)], "low": lowPrice[0:len(lowPrice)-6], "med": midPrice[0:len(midPrice)-6], "high": highPrice[0:len(highPrice)-6]}
         dict = OrderedDict(dict)
         setArray.append(dict)
-        print setArray
     return setArray
     # return "HI"
