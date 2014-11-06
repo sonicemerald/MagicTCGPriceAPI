@@ -123,9 +123,8 @@ def getTCGPlayerSetPrices(cardSet):
         lowPrice = rawHTML[startLowIndex:endLowIndex]
 
         dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
-        #dict = {"name": CardName[8:len(CardName)], "low": lowPrice[0:len(lowPrice)-6], "med": midPrice[0:len(midPrice)-6], "high": highPrice[0:len(highPrice)-6]}
-        dict = OrderedDict(dict)
         if((CardName.find("Emblem -") == -1) or (CardName.find("Token") == -1)):
+            dict = OrderedDict(dict)
             setArray.append(dict)    
     return setArray
     # return "HI"
