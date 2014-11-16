@@ -63,28 +63,41 @@ def getTCGPlayerPrices(cardName, cardSet):
     htmlFile = urllib.urlopen(tcgPlayerURL)
     rawHTML = htmlFile.read()
 
+    # Scrape for Normal prices
+    normalIndex = rawHTML.find('<b>Normal</b>')
+
     #   Scrape for the low price
-    tempIndex = rawHTML.find('>L:')
+    tempIndex = rawHTML.find(">Low:", normalIndex)
     startLowIndex = rawHTML.find("$", tempIndex)
     endLowIndex = rawHTML.find("<", startLowIndex)
 
     lowPrice = rawHTML[startLowIndex:endLowIndex]
 
     #   Scrape for the mid price
-    tempIndex = rawHTML.find('>M:')
+    tempIndex = rawHTML.find('>Median:', normalIndex)
     startMidIndex = rawHTML.find("$", tempIndex)
     endMidIndex = rawHTML.find("<", startMidIndex)
     
     midPrice = rawHTML[startMidIndex:endMidIndex]
 
     #   Scrape for the high price
-    tempIndex = rawHTML.find('>H:')
+    tempIndex = rawHTML.find('>High:', normalIndex)
     startHighIndex = rawHTML.find("$", tempIndex)
     endHighIndex = rawHTML.find("<", startHighIndex)
     
     highPrice = rawHTML[startHighIndex:endHighIndex]
 
-    return [lowPrice, midPrice, highPrice]
+    #Scrape for Foil Price
+    foilIndex = rawHTML.find('<b>Foil</b>')
+
+    #   Scrape for the mid price
+    tempIndex = rawHTML.find('>Median:', foilIndex)
+    startMidFoilIndex = rawHTML.find("$", tempIndex)
+    endMidFoilIndex = rawHTML.find("<", startMidFoilIndex)
+    
+    foilPrice = rawHTML[startMidFoilIndex:endMidFoilIndex]
+
+    return [lowPrice, midPrice, highPrice, foilPrice]
 
 def getTCGPlayerSetPrices(cardSet):
     #   Open the TCGPlayer URL
