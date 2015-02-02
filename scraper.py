@@ -119,21 +119,21 @@ def getTCGPlayerSetPrices(cardSet):
         startHighIndex = rawHTML.find("$", tempIndex)
         endHighIndex = rawHTML.find("</font>", startHighIndex)
         index = endHighIndex
-        highPrice = rawHTML[startHighIndex:endHighIndex]
+        highPrice = rawHTML[startHighIndex+1:endHighIndex]
 
         #   Scrape for the mid price
         tempIndex = rawHTML.find("<td width=55", endHighIndex)
         startMidIndex = rawHTML.find("$", tempIndex)
         endMidIndex = rawHTML.find("</font>", startMidIndex)
         index = endMidIndex
-        midPrice = rawHTML[startMidIndex:endMidIndex]
+        midPrice = rawHTML[startMidIndex+1:endMidIndex]
 
         #   Scrape for the low price
         tempIndex = rawHTML.find("<td width=55", endMidIndex)
         startLowIndex = rawHTML.find("$", tempIndex)
         endLowIndex = rawHTML.find("</font>", startLowIndex)
         index = endLowIndex
-        lowPrice = rawHTML[startLowIndex:endLowIndex]
+        lowPrice = rawHTML[startLowIndex+1:endLowIndex]
 
 
         print "emblem " + str(("Emblem" in CardName))
