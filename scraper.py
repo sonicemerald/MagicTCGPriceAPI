@@ -114,6 +114,13 @@ def getTCGPlayerSetPrices(cardSet):
         CardName = rawHTML[startNameIndex:endNameIndex]
         index = endNameIndex
 
+        # Scrape for Rarity
+        tempIndex = rawHTML.find("<td width=30", index)
+        startRareIndex = rawHTML.find(";", tempIndex)
+        endRareIndex = rawHTML.find("</font>", startRareIndex)
+        index = endRareIndex
+        Rarity = rawHTML[startRareIndex:endRareIndex]
+
         #   Scrape for the high price
         tempIndex = rawHTML.find("<td width=55", index)
         startHighIndex = rawHTML.find("$", tempIndex)
@@ -135,14 +142,13 @@ def getTCGPlayerSetPrices(cardSet):
         index = endLowIndex
         lowPrice = rawHTML[startLowIndex:endLowIndex]
 
-
-        print "emblem " + str(("Emblem" in CardName))
-
-        if ("Token" not in CardName):
-            if ("Emblem" not in CardName):
-                print CardName + "does not have emblem"
-                dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
-                dict = OrderedDict(dict)
-                setArray.append(dict)   
+        # old way
+        # if ("Token" not in CardName):
+        #     if ("Emblem" not in CardName):
+        if("T" not in Rarity):
+            print CardName + "does not have emblem or token"
+            dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
+            dict = OrderedDict(dict)
+            setArray.append(dict)   
     return setArray
     # return "HI"
