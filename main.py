@@ -90,7 +90,7 @@ class TCGSetPriceHandler(webapp2.RequestHandler):
         if retVal is None:
             retVal = getTCGPlayerSetPrices(cardSet)
             memcache.add('TCG ' + cardSet, retVal, 300)
-        self.response.headers['Content-Type'] = 'application/json'
+        self.response.headers['Content-Type'] = 'application/json; charset=utf-8'
         self.response.out.write(json.dumps(retVal))
 
 
