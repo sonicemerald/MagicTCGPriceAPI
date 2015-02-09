@@ -149,6 +149,7 @@ def getTCGPlayerSetPrices(cardSet):
             if not CardName:
                 return setArray
             print CardName + "does not have emblem or token"
+            CardName = CardName.decode("latin1")
             dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
             dict = OrderedDict(dict)
             setArray.append(dict)
