@@ -142,12 +142,12 @@ def getTCGPlayerSetPrices(cardSet):
         index = endLowIndex
         lowPrice = rawHTML[startLowIndex:endLowIndex]
 
-        if not CardName:
-            return setArray
         # old way
         # if ("Token" not in CardName):
         #     if ("Emblem" not in CardName):
         if("T" not in Rarity):
+            if not CardName:
+                return setArray
             print CardName + "does not have emblem or token"
             dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
             dict = OrderedDict(dict)
