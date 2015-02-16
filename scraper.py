@@ -152,8 +152,7 @@ def getTCGPlayerSetPrices(cardSet):
             dict = OrderedDict(dict)
             if not CardName:
                 break
-            if("Checklist" in CardName):
-                break
-            setArray.append(dict)
+            if("Checklist" not in CardName):
+                setArray.append(dict)
     return setArray
     # return "HI"
