@@ -162,7 +162,7 @@ def getTCGPlayerSetPrices(cardSet):
                     break
                 if("Checklist" in CardName):
                     continue
-                else if("(Oversized)" in Cardname):
+                else if("Oversized" in Cardname):
                     continue
                 else
                     setArray.append(dict)
