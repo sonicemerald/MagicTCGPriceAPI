@@ -113,6 +113,13 @@ def getTCGPlayerSetPrices(cardSet):
         endNameIndex = rawHTML.find("</font>", startNameIndex)
         CardName = rawHTML[startNameIndex:endNameIndex]
         index = endNameIndex
+        
+        # Scrape for Type
+        tempIndex = rawHTML.find("<td width=120", index)
+        startTypeIndex = rawHTML.find(";", tempIndex)
+        endTypeIndex = rawHTML.find("</font>", startTypeIndex)
+        index = endTypeIndex
+        Type = rawHTML[startTypeIndex:endTypeIndex]
 
         # Scrape for Rarity
         tempIndex = rawHTML.find("<td width=30", index)
@@ -146,17 +153,18 @@ def getTCGPlayerSetPrices(cardSet):
         # if ("Token" not in CardName):
         #     if ("Emblem" not in CardName):
         if("T" not in Rarity):
-            print CardName + "does not have emblem or token"
-            CardName = CardName.decode("latin1")
-            dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
-            dict = OrderedDict(dict)
-            if not CardName:
-                break
-            if("Checklist" in CardName):
-                continue
-            else if("(Oversized)" in Cardname):
-                continue
-            else
-                setArray.append(dict)
+            if("Emblem" not in Type):
+                print CardName + "does not have emblem or token"
+                CardName = CardName.decode("latin1")
+                dict = (("name", CardName[8:len(CardName)]), ("low", lowPrice[0:len(lowPrice)-6]), ("med", midPrice[0:len(midPrice)-6]), ("high", highPrice[0:len(highPrice)-6]))
+                dict = OrderedDict(dict)
+                if not CardName:
+                    break
+                if("Checklist" in CardName):
+                    continue
+                else if("(Oversized)" in Cardname):
+                    continue
+                else
+                    setArray.append(dict)
     return setArray
     # return "HI"
