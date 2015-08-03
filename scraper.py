@@ -113,41 +113,6 @@ def getTCGPlayerSetPrices(cardSet):
         endNameIndex = rawHTML.find("</font>", startNameIndex)
         CardName = rawHTML[startNameIndex:endNameIndex]
         index = endNameIndex
-        
-        #check to see if cards that are not in MO, but are priced as if.        
-        if(cardSet == "Magic Origins"):
-            if("Aegis Angel" in CardName):
-                continue
-            elif(CardName == "Divine Verdict"):
-                continue
-            elif(CardName == "Eagle of the Watch"):
-                continue
-            elif(CardName == "Serra Angel"):
-                continue
-            elif(CardName == "Into the Void"):
-                continue
-            elif(CardName == "Mahamoti Djinn"):
-                continue
-            elif(CardName == "Weave Fate"):
-                continue
-            elif(CardName == "Flesh to Dust"):
-                continue
-            elif(CardName == "Mind Rot"):
-                continue
-            elif(CardName == "Nightmare"):
-                continue
-            elif(CardName == "Sengir Vampire"):
-                continue
-            elif(CardName == "Fiery Hellhound"):
-                continue
-            elif(CardName == "Shivan Dragon"):
-                continue
-            elif(CardName == "Plummet"):
-                continue
-            elif(CardName == "Prized Unicorn"):
-                continue
-            elif(CardName == "Terra Stomper"):
-                continue
 
         # Scrape for Type
         tempIndex = rawHTML.find("<td width=120", index)
